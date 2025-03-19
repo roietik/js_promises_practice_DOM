@@ -86,7 +86,7 @@ describe('Promises in DOM', () => {
     it('should be resolved after the right click', () => {
       page.simulateRightClick();
 
-      page.notification().should('include.text', 'Second promise was resolved');
+      page.notification().should('include.text', secondResolvedMsg);
     });
 
     it('should not be resolved without clicks after delay', () => {
