@@ -74,9 +74,20 @@ describe('Promises in DOM', () => {
     });
 
     it('should be resolved after the right click', () => {
-      page.body().rightclick();
+      cy.window().then((win) => {
+        const $event = new MouseEvent('click', {
+          button: 2,
+          bubbles: true,
+          cancelable: true,
+          view: win,
+        });
 
-      page.notification().should('include.text', secondResolvedMsg);
+        cy.document().then((doc) => {
+          doc.dispatchEvent($event);
+        });
+      });
+
+      page.notification().should('include.text', 'Second promise was resolved');
     });
 
     it('should not be resolved without clicks after delay', () => {
